@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="latin1" collation="latin1_swedish_ci">simak_cs</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="admin" view="standard">
+<left>57</left>
+<top>532</top>
+<width>218</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `admin` (
+  `id_admin` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `nama_admin` varchar(30) DEFAULT NULL,
+  `username` varchar(15) DEFAULT NULL,
+  `password` varchar(32) DEFAULT NULL,
+  `tgl_gabung` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_admin`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="agama" view="standard">
+<left>13</left>
+<top>152</top>
+<width>222</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `agama` (
+  `id_agama` tinyint(2) NOT NULL AUTO_INCREMENT,
+  `nama_agama` varchar(17) DEFAULT NULL,
+  PRIMARY KEY (`id_agama`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="alamat_calon_mahasiswa" view="standard">
+<left>586</left>
+<top>103</top>
+<width>273</width>
+<height>311</height>
+<sql_create_table>CREATE TABLE `alamat_calon_mahasiswa` (
+  `no_reg` char(18) NOT NULL,
+  `id_kewarganegaraan` smallint(4) DEFAULT NULL,
+  `id_provinsi` smallint(4) DEFAULT NULL,
+  `id_kabupaten` smallint(4) DEFAULT NULL,
+  `id_kecamatan` smallint(4) DEFAULT NULL,
+  `id_jenis_tinggal` tinyint(2) DEFAULT NULL,
+  `nik` char(16) DEFAULT NULL,
+  `alamat` varchar(30) DEFAULT NULL,
+  `kelurahan` varchar(15) DEFAULT NULL,
+  `dusun` varchar(20) DEFAULT NULL,
+  `rt` tinyint(3) DEFAULT NULL,
+  `rw` tinyint(3) DEFAULT NULL,
+  `kode_pos` mediumint(5) DEFAULT NULL,
+  `no_telp` varchar(13) DEFAULT NULL,
+  `no_hp` varchar(13) DEFAULT NULL,
+  `email` varchar(30) DEFAULT NULL,
+  `kps` tinyint(1) DEFAULT NULL,
+  `no_kps` char(32) DEFAULT NULL,
+  PRIMARY KEY (`no_reg`),
+  KEY `FK_kabupaten_mahasiswa` (`id_kabupaten`),
+  KEY `FK_jenis_tinggal_mahasiswa` (`id_jenis_tinggal`),
+  KEY `FK_kecamatan_mahasiswa` (`id_kecamatan`),
+  KEY `FK_provinsi_mahasiswa` (`id_provinsi`),
+  KEY `FK_warganegara_mahasiswa` (`id_kewarganegaraan`),
+  CONSTRAINT `FK_jenis_tinggal_mahasiswa` FOREIGN KEY (`id_jenis_tinggal`) REFERENCES `jenis_tinggal` (`id_jenis_tinggal`) ON UPDATE CASCADE,
+  CONSTRAINT `FK_kabupaten_mahasiswa` FOREIGN KEY (`id_kabupaten`) REFERENCES `kabupaten` (`id_kabupaten`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_kecamatan_mahasiswa` FOREIGN KEY (`id_kecamatan`) REFERENCES `kecamatan` (`id_kecamatan`) ON UPDATE CASCADE,
+  CONSTRAINT `FK_provinsi_mahasiswa` FOREIGN KEY (`id_provinsi`) REFERENCES `provinsi` (`id_provinsi`) ON UPDATE CASCADE,
+  CONSTRAINT `FK_warganegara_mahasiswa` FOREIGN KEY (`id_kewarganegaraan`) REFERENCES `negara` (`id_negara`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="biodata_calon_mahasiswa" view="standard">
+<left>306</left>
+<top>28</top>
+<width>246</width>
+<height>265</height>
+<sql_create_table>CREATE TABLE `biodata_calon_mahasiswa` (
+  `no_reg` char(18) NOT NULL,
+  `id_agama` tinyint(2) DEFAULT NULL,
+  `id_semester` smallint(3) DEFAULT NULL,
+  `tgl_reg` datetime DEFAULT NULL,
+  `nama_mahasiswa` varchar(70) DEFAULT NULL,
+  `tempat_lahir` varchar(50) DEFAULT NULL,
+  `tanggal_lahir` date DEFAULT NULL,
+  `jenis_kelamin` tinyint(1) DEFAULT NULL,
+  `prodi` varchar(21) DEFAULT NULL,
+  `asal_sma` varchar(30) DEFAULT NULL,
+  `angkatan` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`no_reg`),
+  KEY `FK_agama_mahasiswa` (`id_agama`),
+  KEY `FK_semester_mahasiswa` (`id_semester`),
+  CONSTRAINT `FK_agama_mahasiswa` FOREIGN KEY (`id_agama`) REFERENCES `agama` (`id_agama`) ON UPDATE CASCADE,
+  CONSTRAINT `FK_penghubung_mahasiswa` FOREIGN KEY (`no_reg`) REFERENCES `alamat_calon_mahasiswa` (`no_reg`) ON UPDATE CASCADE,
+  CONSTRAINT `FK_semester_mahasiswa` FOREIGN KEY (`id_semester`) REFERENCES `semester` (`id_semester`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="kecamatan" view="standard">
+<left>926</left>
+<top>20</top>
+<width>246</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `kecamatan` (
+  `id_kecamatan` smallint(4) NOT NULL AUTO_INCREMENT,
+  `id_kabupaten` smallint(4) DEFAULT NULL,
+  `nama_kecamatan` varchar(40) DEFAULT NULL,
+  PRIMARY KEY (`id_kecamatan`),
+  KEY `FK_kecamatan` (`id_kabupaten`),
+  CONSTRAINT `FK_kecamatan` FOREIGN KEY (`id_kabupaten`) REFERENCES `kabupaten` (`id_kabupaten`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="mahasiswa" view="standard">
+<left>19</left>
+<top>16</top>
+<width>168</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `mahasiswa` (
+  `nim` char(10) NOT NULL,
+  `no_reg` char(18) DEFAULT NULL,
+  `lulus` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`nim`),
+  UNIQUE KEY `jadi_mahasiswa` (`no_reg`),
+  CONSTRAINT `FK_jadi_mahasiswa` FOREIGN KEY (`no_reg`) REFERENCES `biodata_calon_mahasiswa` (`no_reg`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="negara" view="standard">
+<left>1232</left>
+<top>340</top>
+<width>223</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `negara` (
+  `id_negara` smallint(4) NOT NULL AUTO_INCREMENT,
+  `nama_negara` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`id_negara`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="provinsi" view="standard">
+<left>959</left>
+<top>184</top>
+<width>228</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `provinsi` (
+  `id_provinsi` smallint(4) NOT NULL AUTO_INCREMENT,
+  `id_negara` smallint(4) DEFAULT NULL,
+  `nama_provinsi` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id_provinsi`),
+  KEY `FK_provinsi` (`id_negara`),
+  CONSTRAINT `FK_provinsi` FOREIGN KEY (`id_negara`) REFERENCES `negara` (`id_negara`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="semester" view="standard">
+<left>13</left>
+<top>281</top>
+<width>213</width>
+<height>197</height>
+<sql_create_table>CREATE TABLE `semester` (
+  `id_semester` smallint(3) NOT NULL AUTO_INCREMENT,
+  `tahun` smallint(4) DEFAULT NULL,
+  `tahun_ajaran` char(9) DEFAULT NULL,
+  `semester` tinyint(1) DEFAULT NULL,
+  `tgl_mulai` date DEFAULT NULL,
+  `tgl_selesai` date DEFAULT NULL,
+  `berlaku` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id_semester`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="kabupaten" view="standard">
+<left>1218</left>
+<top>77</top>
+<width>243</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `kabupaten` (
+  `id_kabupaten` smallint(4) NOT NULL AUTO_INCREMENT,
+  `id_provinsi` smallint(4) DEFAULT NULL,
+  `nama_kabupaten` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id_kabupaten`),
+  KEY `FK_kabupaten` (`id_provinsi`),
+  CONSTRAINT `FK_kabupaten` FOREIGN KEY (`id_provinsi`) REFERENCES `provinsi` (`id_provinsi`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="jenis_tinggal" view="standard">
+<left>934</left>
+<top>385</top>
+<width>255</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `jenis_tinggal` (
+  `id_jenis_tinggal` tinyint(2) NOT NULL AUTO_INCREMENT,
+  `nama_jenis_tinggal` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id_jenis_tinggal`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="dosen" view="standard">
+<left>979</left>
+<top>699</top>
+<width>217</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `dosen` (
+  `nip` char(18) NOT NULL,
+  `nama_dosen` varchar(80) DEFAULT NULL,
+  `jabatan` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`nip`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="dosen_pembimbing" view="standard">
+<left>670</left>
+<top>523</top>
+<width>281</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `dosen_pembimbing` (
+  `id_dosen_pembimbing` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `nip_dosen` char(18) DEFAULT NULL,
+  `id_pkl` mediumint(9) DEFAULT NULL,
+  PRIMARY KEY (`id_dosen_pembimbing`),
+  KEY `FK_dosen_pembimbing_pkl` (`id_pkl`),
+  KEY `FK_nip_dosen_pembimbing` (`nip_dosen`),
+  CONSTRAINT `FK_dosen_pembimbing_pkl` FOREIGN KEY (`id_pkl`) REFERENCES `pkl` (`id_pkl`) ON UPDATE CASCADE,
+  CONSTRAINT `FK_nip_dosen_pembimbing` FOREIGN KEY (`nip_dosen`) REFERENCES `dosen` (`nip`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="perusahaan" view="standard">
+<left>661</left>
+<top>682</top>
+<width>260</width>
+<height>180</height>
+<sql_create_table>CREATE TABLE `perusahaan` (
+  `id_perusahaan` smallint(4) NOT NULL AUTO_INCREMENT,
+  `nama_perusahaan` varchar(70) DEFAULT NULL,
+  `alamat_perusahaan` varchar(80) DEFAULT NULL,
+  `telepon_perusahaan` varchar(13) DEFAULT NULL,
+  `jenis_usaha` varchar(20) DEFAULT NULL,
+  `aktif` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id_perusahaan`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="pkl" view="standard">
+<left>345</left>
+<top>485</top>
+<width>246</width>
+<height>231</height>
+<sql_create_table>CREATE TABLE `pkl` (
+  `id_pkl` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `nim` char(10) DEFAULT NULL,
+  `id_semester` smallint(3) DEFAULT NULL,
+  `id_perusahaan` smallint(4) DEFAULT NULL,
+  `id_ketua_komisi` char(18) DEFAULT NULL,
+  `judul_pkl` varchar(100) DEFAULT NULL,
+  `tgl_mulai` date DEFAULT NULL,
+  `tgl_selesai` date DEFAULT NULL,
+  `tgl_daftar` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_pkl`),
+  KEY `FK_mahasiswa_pkl` (`nim`),
+  KEY `FK_semester_pkl` (`id_semester`),
+  KEY `FK_perusahaan_tempat_pkl` (`id_perusahaan`),
+  CONSTRAINT `FK_mahasiswa_pkl` FOREIGN KEY (`nim`) REFERENCES `mahasiswa` (`nim`) ON UPDATE CASCADE,
+  CONSTRAINT `FK_perusahaan_tempat_pkl` FOREIGN KEY (`id_perusahaan`) REFERENCES `perusahaan` (`id_perusahaan`) ON UPDATE CASCADE,
+  CONSTRAINT `FK_semester_pkl` FOREIGN KEY (`id_semester`) REFERENCES `semester` (`id_semester`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
