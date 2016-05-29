@@ -1,0 +1,16 @@
+.noscript {
+	text-align: center;
+	color: #ff0000;
+	font-size: 1.5em;
+	vertical-align: 50%;
+	margin: 250px;
+	border: 1px solid;
+}
+
+footer {
+	text-align: right;
+}
+
+p.form_error {
+	color:red;
+}
