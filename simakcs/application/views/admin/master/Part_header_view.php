@@ -1,7 +1,7 @@
 <!-- Main Header -->
 <header class="main-header">
     <!-- Logo -->
-    <a href="#" class="logo">
+    <a href="<?php echo site_url(); ?>" class="logo">
         <span class="logo-lg"><b><?php echo $header; ?></b></span>
     </a>
     <!-- Header Navbar -->
@@ -17,15 +17,15 @@
                 <li class="dropdown user user-menu">
                     <!-- Menu Toggle Button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <span>Hi, Administrator</span>
+                        <span>Hi, <?php echo $nama_admin; ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- The user image in the menu -->
                         <li class="user-header">
                             <img src="<?php echo base_url('assets/images/avatar5.png'); ?>" class="img-circle" alt="User Image" />
                             <p>
-                                Administrator
-                                <small>Member since Nov. 2015</small>
+                                <?php echo $nama_admin; ?>
+                                <small>Administrator</small>
                             </p>
                         </li>
                         

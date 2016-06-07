@@ -22,7 +22,7 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="<?php echo site_url('Autentikasi/login'); ?>"><b>SIMAK</b> Computer Science</a>
+            <a href="<?php echo site_url('Autentikasi'); ?>"><b>SIMAK</b> Computer Science</a>
         </div>
         <?php $this->load->view('messages_view'); ?>
         <div class="login-box-body">

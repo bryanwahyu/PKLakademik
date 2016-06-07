@@ -7,10 +7,7 @@
 	border: 1px solid;
 }
 
-footer {
-	text-align: right;
-}
-
-p.form_error {
+.form-group p {
 	color:red;
+	padding-top : 5px;
 }

@@ -7,11 +7,13 @@
     <title><?php echo $title; ?></title>
 
     <!--Link CSS-->
+    <link type="image/ico" rel="icon" href="<?php echo base_url('assets/images/unud.png'); ?>" />
     <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap/css/bootstrap.min.css'); ?>" />
     <link rel="stylesheet" href="<?php echo base_url('assets/font-awesome-4.3.0/css/font-awesome.min.css'); ?>" />
     <link rel="stylesheet" href="<?php echo base_url('assets/ionicons-2.0.1/css/ionicons.min.css'); ?>" />
     <link rel="stylesheet" href="<?php echo base_url('assets/adminLTE/css/AdminLTE.min.css'); ?>" />
     <link rel="stylesheet" href="<?php echo base_url('assets/adminLTE/css/skins/skin-blue.min.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo base_url('assets/custom/css/main.css'); ?>" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

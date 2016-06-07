@@ -7,15 +7,13 @@ class Admin_Controller extends CI_Controller {
 	protected $_nama_model	= '';
 	protected $_layout		= 'admin/master/Master_layout_view';
 	protected $_data		= array(
-		'title'  => 'SIMAK Computer Science',
-		'header' => 'Ilmu Komputer',
-		'footer' => '<strong>Copyright &copy; 2016 <a href="#">Ilmu Komputer</a>.</strong> All rights reserved.',
-		'content'=> ''
-	);
-	protected $_sess		= array(
-		'id_admin'	=> NULL,
+		'title'		=> 'SIMAK Computer Science',
+		'header'	=> 'Ilmu Komputer',
+		'footer'	=> '<strong>Copyright &copy; 2016 <a href="#">Ilmu Komputer</a>.</strong> All rights reserved.',
+		'content'	=> '',
+		'id_admin'  => NULL,
 		'nama_admin'=> NULL,
-		'logged_in'	=> NULL
+		'logged_in' => NULL
 	);
 
 	public function __construct(){
@@ -27,13 +25,13 @@ class Admin_Controller extends CI_Controller {
 		}
 		
 		//periksa user
-		$this->_sess['logged_in'] = $this->session->userdata('logged_in');
-		if(!$this->_sess['logged_in']){
+		$this->_data['logged_in'] = $this->session->userdata('logged_in');
+		if(!$this->_data['logged_in']){
 			redirect(site_url());
 		}
 
 		//load nama user session
-		$this->_sess['id_admin']  = $this->session->userdata('id_admin');
-		$this->_sess['nama_user'] = $this->session->userdata('nama_admin');
+		$this->_data['id_admin']  = $this->session->userdata('id_admin');
+		$this->_data['nama_admin'] = $this->session->userdata('nama_admin');
 	}
 }
