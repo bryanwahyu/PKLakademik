@@ -44,5 +44,6 @@
 <script src="<?php echo base_url('assets/adminLTE/js/app.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/plugins/slimScroll/jquery.slimscroll.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/plugins/fastclick/fastclick.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/custom/js/fungsi.js'); ?>"></script>
 </body>
 </html>

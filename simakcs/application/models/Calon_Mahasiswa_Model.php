@@ -101,6 +101,18 @@ class Calon_Mahasiswa_Model extends MY_Model {
 		return $search;
 	}
 
+	public function get_data_update($id){
+		$biodata = 'biodata_calon_mahasiswa';
+		$alamat = 'alamat_calon_mahasiswa';
+		$this->db->select('*');
+		$this->db->from($biodata);
+		$this->db->join($alamat, 'biodata_calon_mahasiswa.no_reg = alamat_calon_mahasiswa.no_reg', 'left');
+		$this->db->where(array('biodata_calon_mahasiswa.no_reg' => $id));
+		$this->db->limit(1);
+
+		return $this->db->get()->result();
+	}
+
 	public function create($data_biodata, $data_alamat){
 		$this->_tabel = 'biodata_calon_mahasiswa';
 		$insert_biodata = $this->db->insert($this->_tabel, $data_biodata);
@@ -129,17 +141,16 @@ class Calon_Mahasiswa_Model extends MY_Model {
 	}
 
 	public function del($id, $limit = 1){
-		//seleksi data
-		$this->db->where($id);
-
-		//limit data
-		$this->db->limit($limit);
-
-		//delete data
+		//delete data alamat calon mahasiswa
 		$this->_tabel = 'alamat_calon_mahasiswa';
+		$this->db->where(array('no_reg' => $id));
+		$this->db->limit($limit);
 		$delete_alamat = $this->db->delete($this->_tabel);
 		
+		//delete data biodata calon mahasiswa
 		$this->_tabel = 'biodata_calon_mahasiswa';
+		$this->db->where(array('no_reg' => $id));
+		$this->db->limit($limit);
 		$delete_biodata = $this->db->delete($this->_tabel);
 
 		//return data

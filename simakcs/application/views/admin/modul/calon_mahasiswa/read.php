@@ -3,19 +3,19 @@ $tbody = '';
 foreach($data_calon_mahasiswa as $data){
     $id = $data->no_reg;
     $link_detail = '
-        <a href="'.site_url('Calon_Mahasiswa/detail/'.$id).'" title="Detail Data ID : '.$id.'">
+        <a href="'.site_url('Calon_Mahasiswa/detail/'.$id).'" class="btn btn-primary" title="Detail Data ID : '.$id.'">
         <span class="glyphicon glyphicon-book"></span>
         <span class="sr-only">Detail</span>
         </a>
     ';
     $link_update = '
-        <a href="'.site_url('Calon_Mahasiswa/update/'.$id).'" title="Update Data ID : '.$id.'">
+        <a href="'.site_url('Calon_Mahasiswa/update/'.$id).'" class="btn btn-success" title="Update Data ID : '.$id.'">
         <span class="glyphicon glyphicon-edit"></span>
         <span class="sr-only">Update</span>
         </a>
     ';
     $link_delete = '
-        <a href="'.site_url('Calon_Mahasiswa/delete/'.$id).'" data-confirm="Apakah anda yakin menghapus data ID : '.$id.' ?"  title="Delete Data ID : '.$id.'">
+        <a href="'.site_url('Calon_Mahasiswa/delete/'.$id).'" class="btn btn-danger" data-confirm="Apakah anda yakin menghapus data ID : '.$id.' ?"  title="Delete Data ID : '.$id.'">
         <span class="glyphicon glyphicon-trash"></span>
         <span class="sr-only">Delete</span>
         </a>

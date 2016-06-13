@@ -1,5 +1,9 @@
 <!-- Paging dan form pencarian -->
-    <a href="<?php echo $link_create; ?>" class="btn btn-primary">Tambah Data</a>
+    <a href="<?php echo $link_create; ?>" class="btn btn-primary">
+        <span class="glyphicon glyphicon-plus"></span>
+        <span class="sr-only"></span>
+        &nbsp;Tambah Data
+    </a>
     <?php
         if(isset($link_back)){
             echo '

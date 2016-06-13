@@ -156,4 +156,103 @@ class Calon_Mahasiswa extends Admin_Controller {
 		
 		$this->load->view($this->_layout, $this->_data);
 	}
+
+	public function update($id){
+		//submit data
+		if($this->input->post('submit') == 'Update Data'){
+			if($this->form_validation->run()){
+				$clause = array(
+					'no_reg' => $this->input->post('noreg')
+				);
+
+				$biodata = array(
+					'id_agama' => $this->input->post('agama'),
+					'id_semester' => $this->input->post('semester'),
+					'tgl_reg' => $this->input->post('tgl_reg'),
+					'nama_mahasiswa' => $this->input->post('nama_mhs'),
+					'tempat_lahir' => $this->input->post('tempat_lahir'),
+					'tanggal_lahir' => $this->input->post('tgl_lahir'),
+					'jenis_kelamin' => $this->input->post('jenis_kelamin'),
+					'prodi' => $this->input->post('program_studi'),
+					'asal_sma' => $this->input->post('asal_sma'),
+					'angkatan' => $this->input->post('angkatan')
+				);
+				
+				$alamat = array(
+					'id_kewarganegaraan' => $this->input->post('warganegara'),
+					'id_provinsi' => $this->input->post('provinsi'),
+					'id_kabupaten' => $this->input->post('kabupaten'),
+					'id_kecamatan' => $this->input->post('kecamatan'),
+					'id_jenis_tinggal' => $this->input->post('jenis_tinggal'),
+					'nik' => $this->input->post('nik'),
+					'alamat' => $this->input->post('alamat'),
+					'kelurahan' => $this->input->post('kelurahan'),
+					'dusun' => $this->input->post('dusun'),
+					'rt' => $this->input->post('rt'),
+					'rw' => $this->input->post('rw'),
+					'kode_pos' => $this->input->post('kode_pos'),
+					'no_telp' => $this->input->post('telephone'),
+					'no_hp' => $this->input->post('handphone'),
+					'email' => $this->input->post('email'),
+					'kps' => $this->input->post('kps'),
+					'no_kps' => $this->input->post('no_kps')
+				);
+
+				if($this->mahasiswa->edit($clause, $biodata, $alamat)){
+					$this->session->set_flashdata('success', 'Data calon mahasiswa berhasil diupdate.');
+				} else {
+					$this->session->set_flashdata('error', 'Data calon mahasiswa gagal diupdate.');
+				}
+				redirect('Calon_Mahasiswa');
+			}
+		}
+
+		//var for view
+		$this->_data['description'] = 'Update Data Calon Mahasiswa';
+		$this->_data['page'] = 'update';
+
+		//data update
+		if(!($data_update = $this->mahasiswa->get_data_update($id))){
+			$this->session->set_flashdata('error', 'Data calon mahasiswa tidak ditemukan.');
+			redirect('Calon_Mahasiswa');
+		}
+		$this->_data['data_update'] = $data_update;
+
+		//data passing
+		$this->_data['data_pelengkap'] = array(
+			'agama' => $this->mahasiswa->get_agama(),
+			'warganegara' => $this->mahasiswa->get_negara(),
+			'provinsi' => $this->mahasiswa->get_provinsi(),
+			'kabupaten' => $this->mahasiswa->get_kabupaten(),
+			'kecamatan' => $this->mahasiswa->get_kecamatan(),
+			'jenis_tinggal' => $this->mahasiswa->get_jenis_tinggal(),
+			'program_studi' => 'S1 Teknik Informatika',
+			'semester' => $this->mahasiswa->get_semester(),
+			'kps' => 	array(
+				array('id' => 0,'nama' => 'Tidak'),
+				array('id' => 1,'nama' => 'Ya')
+			),
+			'jenis_kelamin' => 	array(
+				array('id' => 0,'nama' => 'Laki - Laki'),
+				array('id' => 1,'nama' => 'Perempuan')
+			)
+		);
+		
+		$this->load->view($this->_layout, $this->_data);
+	}
+
+	public function delete($id){
+		if(!$this->mahasiswa->get(array('no_reg' => $id), 1)){
+			$this->session->set_flashdata('error', 'Data calon mahasiswa tidak ditemukan.');
+			redirect('Calon_Mahasiswa');
+		}
+
+		if($this->mahasiswa->del($id)){
+			$this->session->set_flashdata('success', 'Data calon mahasiswa berhasil dihapus.');
+		} else {
+			$this->session->set_flashdata('error', 'Data calon mahasiswa gagal dihapus.');
+		}
+
+		redirect('Calon_Mahasiswa');
+	}
 }
